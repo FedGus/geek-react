@@ -5,7 +5,5 @@ import './style.scss';
 
 export default () => {
     return <div>
-        <input type="text"></input>
-        <button>Send</button>
     </div>
 }
