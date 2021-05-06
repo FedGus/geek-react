@@ -1,9 +1,11 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+// import ReactDom from 'react-dom';
 
 import './style.scss';
 
 export default () => {
     return <div>
-    </div>
-}
+        <input type="text"/>
+        <button>Send</button>
+    </div>;
+};

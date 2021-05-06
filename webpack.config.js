@@ -6,11 +6,9 @@ const path = require('path');
 module.exports = {
     entry: {
         main: path.resolve(__dirname, 'src', 'index.jsx')
-        // main: path.resolve(__dirname, 'src')
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        // publicPath: '', //zabito
         filename: path.join('js', 'bundle.js')
     },
     target: 'web',
@@ -22,11 +20,7 @@ module.exports = {
             },
             {
                 test: /\.s[ac]ss$/i,
-                use: [
-                    "style-loader",
-                    "css-loader",
-                    "sass-loader",
-                ],
+                use: ["style-loader", "css-loader", "sass-loader"]
             },
             {
                 test: /\.jsx?$/i,
@@ -39,22 +33,20 @@ module.exports = {
                             { "loose": true }
                         ]
                     ]
-                    // preset: ["@babel/preset-env", "@babel/preset-react"]
-                    // аналог файла .babelrc
                 }
             }
         ]
     },
     resolve: {
-alias: {
-    '@styles': path.resolve(__dirname, 'src', 'styles'),
-    '@components': path.resolve(__dirname, 'src', 'components'),
-    '@containers': path.resolve(__dirname, 'src', 'components', 'containers'),
-    '@pages': path.resolve(__dirname, 'src', 'pages'),
-    '@img': path.resolve(__dirname, 'src', 'resources', 'img'),
-    '@func': path.resolve(__dirname, 'src', 'resources', 'functions'),
-    '@lib': path.resolve(__dirname, 'src', 'resources', 'libraries'),
-}
+        alias: {
+            '@styles': path.resolve(__dirname, 'src', 'styles'),
+            '@components': path.resolve(__dirname, 'src', 'components'),
+            '@containers': path.resolve(__dirname, 'src', 'components', 'containers'),
+            '@pages': path.resolve(__dirname, 'src', 'pages'),
+            '@img': path.resolve(__dirname, 'src', 'resources', 'img'),
+            '@func': path.resolve(__dirname, 'src', 'resources', 'functions'),
+            '@lib': path.resolve(__dirname, 'src', 'resources', 'libraries')
+        }
     },
     plugins: [
         new MiniCssExtractPlugin({

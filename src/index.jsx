@@ -3,13 +3,19 @@ import ReactDom from 'react-dom';
 
 import '@styles/main.scss';
 
-import App from "@pages/Home";
-
-import { StylesProvider } from '@material-ui/core/styles'
+import Router from './router/';
+import { BrowserRouter } from 'react-router-dom';
 
 const container = document.querySelector('#app');
 
-
 ReactDom.render(
-    <StylesProvider><div><App /></div></StylesProvider>
-    , container)
+    <BrowserRouter>
+        <Router />
+    </BrowserRouter>,
+    // <StylesProvider>
+    //     <div>
+    //         <App />
+    //     </div>
+    // </StylesProvider>,
+    container
+);
