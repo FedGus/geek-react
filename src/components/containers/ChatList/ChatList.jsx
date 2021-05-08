@@ -27,7 +27,7 @@ export default class ChatList extends Component {
     render() {
         const { activeChats } = this.state;
         const Chats = activeChats.map((el, i) =>
-            <Link to={`/chat/${el.id}`} ><SimpleCell key={i} className="chatlist-list__item" before={<Avatar size={48} />}>{el.name}</SimpleCell></Link>
+            <Link key={i} to={`/chat/${el.id}`} ><SimpleCell className="chatlist-list__item" before={<Avatar size={48} />}>{el.name}</SimpleCell></Link>
         );
 
         return (

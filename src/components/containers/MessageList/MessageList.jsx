@@ -7,14 +7,14 @@ import "./style.scss";
 import Message from "@components/Message";
 //stateFull
 
-export default class MessageList extends Component {
+import { connect } from 'react-redux';
+import redux, { bindActionCreators } from 'redux';
+import { loadMessages } from '@actions/messages';
+
+class MessageList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [
-        { name: "one", text: "Hey!" },
-        { name: "one", text: "How are you?" }
-      ],
       text: ""
     };
   }
@@ -45,7 +45,7 @@ export default class MessageList extends Component {
   }
 
   render() {
-    const { messages } = this.state;
+    const { messages } = this.props;
     const Messages = messages.map((el, i) => (
       <Message key={"msg_" + i} name={el.name} text={el.text} />
     ));
@@ -54,11 +54,11 @@ export default class MessageList extends Component {
       <div className="message-list__wrapper">
         <CardGrid size="l">
           <Card mode="outline">
-          <div className="message-list__messages">
-          {Messages}</div>
+            <div className="message-list__messages">
+              {Messages}</div>
           </Card>
         </CardGrid>
-        
+
         <FormLayout>
           <div className="message-list__form">
             <FormItem>
@@ -73,7 +73,7 @@ export default class MessageList extends Component {
               <Button
                 mode="outline"
                 size="l"
-                before={<Icon24SendOutline/>}
+                before={<Icon24SendOutline />}
                 onClick={this.sendMessage}
               >
                 Send
@@ -86,17 +86,10 @@ export default class MessageList extends Component {
   }
 }
 
-//stateLess
-// const arr = [{ name: 'one', text: 'Hey!' }, { name: 'one', text: 'How are you?' }];
+const mapStateToProps = ({messagesReducer}) => ({
+  messages: messagesReducer.messages
+});
 
-// export default () => {
-//     const Messages = arr.map((el, i) => <Message
-//                                             key={ 'msg_' + i }
-//                                             name={ el.name }
-//                                             text={ el.text }
-//                                         />);
+const mapActionsToProps = dispatch => bindActionCreators({load: loadMessages}, dispatch);
 
-//     return <div>
-//         { Messages }
-//     </div>;
-// };
+export default connect(mapStateToProps, null)(MessageList);
