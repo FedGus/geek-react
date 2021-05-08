@@ -29,7 +29,7 @@ export default props => {
       <AdaptivityProvider>
         <AppRoot>
           <SplitLayout>
-            <h1>Chat with {props.name}</h1>
+           <PanelHeader><h1>Chat with {props.name}</h1></PanelHeader> 
             <div className="app__wrapper">
               {/* <MsgInput /> */}
               <ChatList />

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import ReactDom from 'react-dom';
-import { FormLayout, FormItem, Input, Button } from "@vkontakte/vkui";
+import { FormLayout, FormItem, Input, Button, CardGrid, Card } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import { Icon24SendOutline } from "@vkontakte/icons";
 import "./style.scss";
@@ -52,7 +52,13 @@ export default class MessageList extends Component {
 
     return (
       <div className="message-list__wrapper">
-        <div className="message-list__messages">{Messages}</div>
+        <CardGrid size="l">
+          <Card mode="outline">
+          <div className="message-list__messages">
+          {Messages}</div>
+          </Card>
+        </CardGrid>
+        
         <FormLayout>
           <div className="message-list__form">
             <FormItem>
@@ -70,7 +76,7 @@ export default class MessageList extends Component {
                 before={<Icon24SendOutline/>}
                 onClick={this.sendMessage}
               >
-                Add
+                Send
               </Button>
             </FormItem>
           </div>

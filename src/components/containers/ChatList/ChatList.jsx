@@ -1,48 +1,49 @@
 
-        import './style.css';
-        import React, { Component, Fragment } from 'react';
-        import { Link } from 'react-router-dom';
-        import ChatsDialog from '@components/ChatsDialog';
+import './style.css';
+import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import ChatsDialog from '@components/ChatsDialog';
 
-        export default class ChatList extends Component {
-            constructor(props) {
-                super(props);
-                this.state = {
-                    activeChats: [
-                        { name: 'Вася', id: '1' },
-                        { name: 'Клава', id: '2' },
-                        { name: 'Дуня', id: '3' }
-                    ]
-                }
-            }
+import { Header, SimpleCell, Avatar, Separator } from "@vkontakte/vkui";
+import "@vkontakte/vkui/dist/vkui.css";
+import { Icon24SendOutline } from "@vkontakte/icons";
 
-            addChat = name => {
-                this.setState({ activeChats: [...this.state.activeChats, { name, id: Date.now() }] });
-            }
+export default class ChatList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeChats: [
+                { name: 'Вася', id: '1' },
+                { name: 'Клава', id: '2' },
+                { name: 'Дуня', id: '3' }
+            ]
+        }
+    }
 
-            render() {
-                const { activeChats } = this.state;
-                const Chats = activeChats.map((el, i) => <li key={ i } className="chatlist-list__item">
-                    <Link to = {`/chat/${el.id}`} >{ el.name }</Link>
-                </li>);
-        
-                return (
-                    <div className="chatlist d-flex flex-column">
-                        <div>
-                            <ul className="chatlist-list">
-                                { Chats }
-                            </ul>
-                        </div>
-                         
+    addChat = name => {
+        this.setState({ activeChats: [...this.state.activeChats, { name, id: Date.now() }] });
+    }
 
-                        <div>
-                            <ChatsDialog add={ this.addChat } />
-                        </div>
-                        {/* <div>
+    render() {
+        const { activeChats } = this.state;
+        const Chats = activeChats.map((el, i) =>
+            <Link to={`/chat/${el.id}`} ><SimpleCell key={i} className="chatlist-list__item" before={<Avatar size={48} />}>{el.name}</SimpleCell></Link>
+        );
+
+        return (
+            <div className="chatlist d-flex flex-column">
+                <Header mode="secondary">Список диалогов</Header>
+                <div>
+                    {Chats}
+                </div>
+                <Separator style={{ margin: '12px 0' }} />
+                <div>
+                    <ChatsDialog add={this.addChat} />
+                </div>
+                {/* <div>
                             <Link to = '/not-home'>Not Home</Link>
                         </div> */}
-                    </div>
-                )
-            }
-        }
-    
+            </div>
+        )
+    }
+}
