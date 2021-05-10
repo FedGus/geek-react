@@ -33,7 +33,7 @@ export default props => {
             <div className="app__wrapper">
               {/* <MsgInput /> */}
               <ChatList />
-              <MessageList />
+              {props.name && <MessageList />}
             </div>
           </SplitLayout>
         </AppRoot>
