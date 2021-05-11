@@ -1,10 +1,10 @@
 const fs = require('fs');
-const path = './server/db/chats';
+const path = './server/db/users';
 
 module.exports = {
     async load(req,res) {
         try {
-            const result = await fs.readFileSync(`${path}/${req.params.id}/chats.json`, 'UTF-8');
+            const result = await fs.readFileSync(`${path}/user_1.json`, 'UTF-8');
             if (result) {
                 res.json(result);
             }

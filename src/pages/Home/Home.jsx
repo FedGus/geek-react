@@ -1,8 +1,14 @@
-import React from "react";
+import React, { Component } from "react";
 // import ReactDom from 'react-dom';
 import MessageList from "@containers/MessageList";
 import ChatList from "@containers/ChatList";
 import MsgInput from "@components/MsgInput";
+
+import { connect } from 'react-redux';
+import redux, { bindActionCreators } from 'redux';
+import { loadUser } from "@actions/user";
+import { loadChats } from '@actions/chats';
+
 import { StylesProvider } from "@material-ui/core/styles";
 import {
   AdaptivityProvider,
@@ -23,21 +29,35 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 import "./style.scss";
 
-export default props => {
+class Home extends Component {
+  async componentDidMount() {
+    await this.props.loadUser();
+    await this.props.loadChats(this.props.user.id);
+  }
+  render () {
   return (
     <ConfigProvider>
       <AdaptivityProvider>
         <AppRoot>
           <SplitLayout>
-           <PanelHeader><h1>Chat with {props.name}</h1></PanelHeader> 
+           <PanelHeader><h1>Chat with {this.props.name}</h1></PanelHeader> 
             <div className="app__wrapper">
               {/* <MsgInput /> */}
               <ChatList />
-              {props.name && <MessageList />}
+              {this.props.name && <MessageList />}
             </div>
           </SplitLayout>
         </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
   );
+  }
 };
+
+const mapStateToProps = ({ userReducer }) => ({
+  user: userReducer.user
+});
+
+const mapActionsToProps = dispatch => bindActionCreators({ loadUser, loadChats }, dispatch);
+
+export default connect(mapStateToProps, mapActionsToProps)(Home);

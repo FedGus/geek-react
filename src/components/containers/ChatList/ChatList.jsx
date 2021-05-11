@@ -28,7 +28,7 @@ class ChatList extends Component {
     }
 
     componentDidMount() {
-        this.props.loadChats('Username');
+        // this.props.loadChats('Username');
     }
 
     render() {
