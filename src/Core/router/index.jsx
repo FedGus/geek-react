@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import redux, { bindActionCreators } from 'redux';
+
 import Home from '@pages/Home';
 
-export default class Router extends Component {
+class Router extends Component {
   render() {
+    const { chats } = this.props;
+    const ChatsRoutes = chats.map((el, i) =>
+      <Route exact path={`/chat/${el.id}`} render={() => <Home name={el.name} />} key = {i} />
+    );
     return (
       <Switch>
-        <Route exact path="/" component = { Home } />
-        <Route exact path="/chat/1" render = { () => <Home name="Вася" /> } />
-        <Route exact path="/chat/2" render = { () => <Home name="Клава" /> } />
-        <Route exact path="/chat/3" render = { () => <Home name="Дуня" /> } />
-        {/* <Route exact path="/not-home" render = { () => <div>This is not your Home. Get out!</div> } /> */}
+        <Route exact path="/" component={Home} />
+        { ChatsRoutes }
       </Switch>
     );
   }
 };
+
+const mapStateToProps = ({ chatsReducer }) => ({
+  chats: chatsReducer.chats
+});
+
+const mapActionsToProps = dispatch => bindActionCreators({}, dispatch);
+
+export default connect(mapStateToProps, mapActionsToProps)(Router);

@@ -3,12 +3,15 @@ import './style.css';
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import ChatsDialog from '@components/ChatsDialog';
+import { connect } from 'react-redux';
+import redux, { bindActionCreators } from 'redux';
+import { loadChats } from '@actions/chats';
 
 import { Header, SimpleCell, Avatar, Separator } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import { Icon24SendOutline } from "@vkontakte/icons";
 
-export default class ChatList extends Component {
+class ChatList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,9 +27,13 @@ export default class ChatList extends Component {
         this.setState({ activeChats: [...this.state.activeChats, { name, id: Date.now() }] });
     }
 
+    componentDidMount() {
+        this.props.loadChats('Username');
+    }
+
     render() {
-        const { activeChats } = this.state;
-        const Chats = activeChats.map((el, i) =>
+        const { chats } = this.props;
+        const Chats = chats.map((el, i) =>
             <Link key={i} to={`/chat/${el.id}`} ><SimpleCell className="chatlist-list__item" before={<Avatar size={48} />}>{el.name}</SimpleCell></Link>
         );
 
@@ -47,3 +54,11 @@ export default class ChatList extends Component {
         )
     }
 }
+
+const mapStateToProps = ({ chatsReducer }) => ({
+    chats: chatsReducer.chats
+});
+
+const mapActionsToProps = dispatch => bindActionCreators({ loadChats }, dispatch);
+
+export default connect(mapStateToProps, mapActionsToProps)(ChatList);
