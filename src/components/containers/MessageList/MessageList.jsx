@@ -41,8 +41,8 @@ class MessageList extends Component {
     });
   };
 
-  componentDidUpdate() {
-    // console.log('Отправлено');
+  async componentDidMount() {
+    await this.props.loadMessages(this.props.user.id, this.props.activeChat);
   }
 
   render() {
@@ -87,10 +87,12 @@ class MessageList extends Component {
   }
 }
 
-const mapStateToProps = ({messagesReducer}) => ({
-  messages: messagesReducer.messages
+const mapStateToProps = ({messagesReducer, userReducer, chatsReducer }) => ({
+  messages: messagesReducer.messages,
+  user: userReducer.user,
+  activeChat: chatsReducer.activeChat
 });
 
-const mapActionsToProps = dispatch => bindActionCreators({load: loadMessages, send: sendMessage}, dispatch);
+const mapActionsToProps = dispatch => bindActionCreators({loadMessages, send: sendMessage}, dispatch);
 
 export default connect(mapStateToProps, mapActionsToProps)(MessageList);
