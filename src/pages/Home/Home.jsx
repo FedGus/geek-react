@@ -37,7 +37,6 @@ class Home extends Component {
     await this.props.loadUser();
     await this.props.loadChats(this.props.user.id);
     await this.props.loadContacts(this.props.user.id);
-    this.props.getActiveChat(this.props.id);
   }
   render () {
   return (
@@ -49,7 +48,7 @@ class Home extends Component {
             <div className="app__wrapper">
               {/* <MsgInput /> */}
               <ChatList />
-              {this.props.name && <MessageList />}
+              {this.props.name && <MessageList active={ this.props.id }/>}
             </div>
           </SplitLayout>
         </AppRoot>

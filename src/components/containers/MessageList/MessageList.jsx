@@ -28,21 +28,25 @@ class MessageList extends Component {
   };
 
   sendMessage = () => {
-    this.props.send('Username', this.state.text)
+    const user = this.props.user.id;
+    const chat = this.props.active;
+
+    const payload = {
+      name: 'Username',
+      text: this.state.text,
+      date: new Date()
+    };
+
+    this.props.send(payload, chat, user);
+
     this.setState({
-      text: "",
-      // messages: [
-      //   ...this.state.messages,
-      //   {
-      //     name: "User",
-      //     text: this.state.text
-      //   }
-      // ]
+      text: ''
     });
   };
 
+
   async componentDidMount() {
-    await this.props.loadMessages(this.props.user.id, this.props.activeChat);
+    await this.props.loadMessages(this.props.user.id, this.props.active);
   }
 
   render() {
@@ -87,12 +91,12 @@ class MessageList extends Component {
   }
 }
 
-const mapStateToProps = ({messagesReducer, userReducer, chatsReducer }) => ({
+const mapStateToProps = ({ messagesReducer, userReducer, chatsReducer }) => ({
   messages: messagesReducer.messages,
   user: userReducer.user,
   activeChat: chatsReducer.activeChat
 });
 
-const mapActionsToProps = dispatch => bindActionCreators({loadMessages, send: sendMessage}, dispatch);
+const mapActionsToProps = dispatch => bindActionCreators({ loadMessages, send: sendMessage }, dispatch);
 
 export default connect(mapStateToProps, mapActionsToProps)(MessageList);

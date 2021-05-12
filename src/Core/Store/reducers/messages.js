@@ -12,8 +12,8 @@ export default (store = storeMessages, action) => {
                 messages: { $set: action.payload.data }
             });
         }
-        case 'SEND_MSG': {
-            const msg = action.payload;
+        case 'SEND_MESSAGE_SUCCESS': {
+            const msg = action.payload.data;
             return update(store, { messages: { $push: [msg] } });
         }
         default: {
