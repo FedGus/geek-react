@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import redux, { bindActionCreators } from 'redux';
 import { loadUser } from "@actions/user";
 import { loadChats } from '@actions/chats';
+import { loadContacts } from '@actions/contacts';
 
 import { StylesProvider } from "@material-ui/core/styles";
 import {
@@ -33,6 +34,7 @@ class Home extends Component {
   async componentDidMount() {
     await this.props.loadUser();
     await this.props.loadChats(this.props.user.id);
+    await this.props.loadContacts(this.props.user.id);
   }
   render () {
   return (
@@ -58,6 +60,6 @@ const mapStateToProps = ({ userReducer }) => ({
   user: userReducer.user
 });
 
-const mapActionsToProps = dispatch => bindActionCreators({ loadUser, loadChats }, dispatch);
+const mapActionsToProps = dispatch => bindActionCreators({ loadUser, loadChats, loadContacts }, dispatch);
 
 export default connect(mapStateToProps, mapActionsToProps)(Home);
